@@ -1,0 +1,68 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Catagory{% endblock title %}
+
+{% block main-content %}
+
+<div class="container">
+    <div class="row flex justify-content-beyween">
+        <div class='img2 col-lg-5 mt-5'>
+            <img src="{{Product.product_image.url}}"
+                class="image col-xs-6 col-sm-12 col-1g-12 mt-3 text-sm-center w-100 h-75" alt="">
+        </div>
+
+        <div class="productdetail col-lg-5">
+            <h1 style="font-family: Georgia; font-size: 50px ;">{{Product.title}} </h1>
+            <h5>Rs.{{Product.discounted_price}}/-</h5>
+            <small class="text-decoration-line-through text-muted fs-5 "><del>Rs. {{Product.selling_price}}/-</small></del>
+            <br><br><h4>Product Features</h4>
+            <ul class="fs-5" style="font-family: Rajdhani;">
+                <li>{{Product.description}}</li>
+                <li>Comisiting: {{Product.compositing}}</li>
+                <li>Use: {{Product.prodapp}}</li>
+            </ul>
+
+                <form action='/add-to-cart' class='d-inline'>
+                    
+                    <input type="hidden" name="prod_id" value="{{Product.id}}"/>
+                    <button type="submit" class=" btn btn-primary shadow px-5 py-2 "> Add to Cart</button>
+                </form>
+                <a href="{% url 'showcart' %}" class="btn btn-warning shadow px-5 py-2 ms-4 ">Show cart</a> 
+           
+
+
+          
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="row">
+    <div class="col-md-2 offset-md-2">
+      <img height="150px" width="250px" class="card" src="{{Product.product_image.url}}" />
+    </div>
+    <div class="col-md-2 offset-md-2">
+      <h1 style="font-style: italic">{{Product.title}}</h1>
+  
+      <h2 style="font-style: italic; font-size: 1.3rem; text-align: justify">
+        {{item.item_desc}}
+      </h2>
+      <h3>{{item.item_price}}</h3>
+    </div> -->
+
+{% endblock main-content %}

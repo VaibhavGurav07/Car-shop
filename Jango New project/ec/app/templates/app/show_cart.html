@@ -1,0 +1,52 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Add to Cart {% endblock title %}
+
+
+{% block main-content %}
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <h2>Your Cart</h2>
+    
+    {% if cart_items %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.title }}</td>
+                        <td>${{ item.product.discounted_price }}</td>
+                        <td>
+                            <form action="{% url 'update_cart' cart_item_id=item.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" />
+                                <button type="submit">Update</button>
+                            </form>
+                        </td>
+                        <td>${{ item.total_price }}</td>
+                        <td>
+                            <a href="{% url 'remove_from_cart' cart_item_id=item.id %}">Remove</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Total Price: ${{ total_price }}</h3>
+        <a href="{% url 'checkout' %}">Proceed to Checkout</a>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+{% endblock %}
+
+{% endblock main-content %}

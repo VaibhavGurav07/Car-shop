@@ -1,0 +1,45 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block title %}Add to Cart {% endblock title %}
+
+
+{% block main-content %}
+
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <h2>Checkout</h2>
+    
+    {% if cart_items %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.title }}</td>
+                        <td>${{ item.product.discounted_price }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>${{ item.total_price }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Total Price: ${{ total_price }}</h3>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirm Order</button>
+        </form>
+    {% else %}
+        <p>Your cart is empty. You cannot checkout with an empty cart.</p>
+    {% endif %}
+{% endblock %}
+
+{% endblock main-content %}
